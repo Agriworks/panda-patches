@@ -134,7 +134,7 @@ class PatchFile:
         raise NotImplementedError("Need to test and changes for all types of patches")
 
 
-def generate_patches(
+def generate_update_patches(
     old_df: pd.DataFrame, new_df: pd.DataFrame, id_columns: List[str]
 ) -> List[UpdatePatch]:
     """
