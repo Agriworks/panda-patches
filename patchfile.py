@@ -103,6 +103,8 @@ class PatchFile:
                 for patch_object in json_dict["patches"]
             ],
             version=json_dict["version"],
+            creations=[],
+            deletions=[],
             meta=json_dict["meta"],
         )
 
