@@ -1,0 +1,9 @@
+hhid,redcap_event_name,h3_plot1fert___1,h3_plot1fert_other,h3_plot1pest___1,h3_plot1pest___777,h3_plot2fert___1,h3_plot2fert_other,h3_plot2pest___1,h3_plot2pest___777,h3_plot3fert___1,h3_plot3fert_other,h3_plot3pest___1,h3_plot3pest___777,h3_plot1organic_calc,h3_plot2organic_calc,h3_plot3organic_calc,expected_h3_plot1organic_calc,expected_h3_plot2organic_calc,expected_h3_plot3organic_calc
+1,event1,True,,True,,False,,False,,,,,,,,,Conventional,Organic,
+2,event1,True,,False,,False,,False,,,,,,,,,Conventional,Organic,
+3,event1,False,,True,,,,,,,,,,,,,Conventional,,
+4,event1,False,,False,,,,,,,,,,,,,Organic,,
+5,event1,False,False,False,,,,,,,,,,,,,Organic,,
+6,event1,False,True,,,,,,,,,,,,,,NPM,,
+7,event1,True,False,,,,,,,,,,,,,,Conventional,,
+8,event1,False,True,,,,,,,,,,,,,,,,
