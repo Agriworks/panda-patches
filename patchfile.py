@@ -124,7 +124,7 @@ class PatchFile:
             "version": self.version,
             "meta": self.meta,
         }
-        return json.dumps(ret)
+        return json.dumps(ret, indent=4)
 
     def apply_update_patches(self, df: pd.DataFrame):
         for patch in self.patches:
@@ -155,8 +155,6 @@ def generate_update_patches(
     patches = []
 
     for _, new_row in new_df.iterrows():
-        # target_row = new_df[new_df[id_columns] == old_row[id_columns]]
-        # target_row = new_df.loc[new_df[id_columns] == old_df[id_columns]].iloc[0]
         query = " & ".join(
             [
                 f"{col} == '{new_row[col]}'"
@@ -166,7 +164,14 @@ def generate_update_patches(
             ]
         )
         old_row_query_result = old_df.query(query)
-        old_row = old_row_query_result.iloc[0]
+        try:
+            old_row = old_row_query_result.iloc[0]
+        except IndexError:
+            # Print the query and the result
+            print("Error: Could not find a matching row in the old DataFrame")
+            print(f"Query: {query}")
+            print(f"Result: {old_row_query_result}")
+            raise
 
         deltas = {}
         for column in new_df.columns:
