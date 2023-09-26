@@ -150,7 +150,9 @@ def generate_update_patches(
 
     # Check if the DataFrames have the same columns
     if not set(new_df.columns).issubset(set(old_df.columns)):
-        raise ValueError("Source and target DataFrames must have the same columns")
+        # Print out the missing columns
+        missing_columns = set(new_df.columns) - set(old_df.columns)
+        raise ValueError("Source and target DataFrames must have the same columns", missing_columns)
 
     patches = []
 
