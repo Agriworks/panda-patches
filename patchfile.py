@@ -5,79 +5,10 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List
 import pandas as pd
+from deepdiff import DeepDiff
 
-
-class PatchInterface:
-    def apply(self, df: pd.DataFrame) -> None:
-        raise NotImplementedError()
-
-
-@dataclass
-class UpdatePatch(PatchInterface):
-    """
-    Basic Patch object that stores the changes
-    """
-
-    target: Dict[str, Any]
-    deltas: Dict[str, Any]
-
-    @staticmethod
-    def parse_patch_object_json_dict(patch_object_json_dict: Dict) -> UpdatePatch:
-        ret = UpdatePatch(
-            target=patch_object_json_dict["target"],
-            deltas=patch_object_json_dict["deltas"],
-        )
-
-        return ret
-
-    def apply(self, df: pd.DataFrame) -> None:
-        # Select the correct row using the list of target keys and values in target
-        # Fix all the column values given by deltas
-
-        # Find the row(s) in the DataFrame that match the target keys and values
-        match_mask = pd.Series(True, index=df.index)
-        for key, value in self.target.items():
-            match_mask &= df[key] == value
-
-        # Apply the deltas to the matching rows
-        for index, _ in df[match_mask].iterrows():
-            for column, delta in self.deltas.items():
-                df.at[index, column] = delta
-
-
-@dataclass
-class CreatePatch(PatchInterface):
-    target: Dict[str, Any]
-    payload: Dict[str, Any]
-
-    def apply(self, df: pd.DataFrame) -> None:
-        raise NotImplementedError("Need to finish the implementation")
-        # First, check to ensure that the row doesn't already exist
-        match_mask = pd.Series(True, index=df.index)
-        for key, value in self.target.items():
-            match_mask &= df[key] == value
-
-        if match_mask.any():
-            raise ValueError("Row with target values already exists, cannot create.")
-
-        # Second, insert a new row with the payload data
-        new_row = self.target.copy()
-        new_row.update(self.payload)
-        df = df.append(new_row, ignore_index=True)
-
-
-@dataclass
-class DeletePatch(PatchInterface):
-    target: Dict[str, Any]
-
-    def apply(self, df: pd.DataFrame) -> None:
-        # Find the row(s) in the DataFrame that match the target keys and values
-        match_mask = pd.Series(True, index=df.index)
-        for key, value in self.target.items():
-            match_mask &= df[key] == value
-
-        # Delete the rows(s)
-        df.drop(df[match_mask].index, inplace=True)
+from pipeline.patch.patch_interface import PatchInterface
+from pipeline.patch.update_patch import UpdatePatch
 
 
 @dataclass
@@ -133,6 +64,20 @@ class PatchFile:
     def apply(self):
         raise NotImplementedError("Need to test and changes for all types of patches")
 
+    def __eq__(self, __value: object) -> bool:
+        # First check if the value is also a patchfile
+        if not isinstance(__value, PatchFile):
+            return False
+        # Check if the length of the patches match
+        if len(self.patches) != len(__value.patches):
+            return False
+        # Now go through each of the update patches in the new patch file and see if they are present in current patch file
+        for patch in __value.patches:
+            if patch not in self.patches:
+                return False
+
+        return True
+
 
 def generate_update_patches(
     old_df: pd.DataFrame, new_df: pd.DataFrame, id_columns: List[str]
@@ -152,7 +97,9 @@ def generate_update_patches(
     if not set(new_df.columns).issubset(set(old_df.columns)):
         # Print out the missing columns
         missing_columns = set(new_df.columns) - set(old_df.columns)
-        raise ValueError("Source and target DataFrames must have the same columns", missing_columns)
+        raise ValueError(
+            "Source and target DataFrames must have the same columns", missing_columns
+        )
 
     patches = []
 
