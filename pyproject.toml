@@ -19,3 +19,6 @@ mypy = "^1.7.1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+generate-patch = "panda_patch.cmdline:generate_patch_from_csv"

@@ -4,8 +4,7 @@ from typing import Any, Dict
 
 import pandas as pd
 
-from pipeline.patch.patch_interface import PatchInterface
-from deepdiff import DeepDiff
+from panda_patch.patch_interface import PatchInterface
 
 
 @dataclass

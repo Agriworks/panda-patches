@@ -5,10 +5,8 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List
 import pandas as pd
-from deepdiff import DeepDiff
 
-from pipeline.patch.patch_interface import PatchInterface
-from pipeline.patch.update_patch import UpdatePatch
+from panda_patch.update_patch import UpdatePatch
 
 
 @dataclass
