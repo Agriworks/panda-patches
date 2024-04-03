@@ -5,7 +5,7 @@ description = "See changes made to datasets in terms of patches"
 authors = ["Radhakrishna Sanka <rkrishnasanka@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "panda_patch"}]
+packages = [{include = "panda_patches"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
