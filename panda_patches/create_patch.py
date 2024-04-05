@@ -4,7 +4,7 @@ from typing import Any, Dict
 
 import pandas as pd
 
-from panda_patch.patch_interface import PatchInterface
+from panda_patches.patch_interface import PatchInterface
 
 
 @dataclass

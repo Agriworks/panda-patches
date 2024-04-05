@@ -5,7 +5,7 @@ from pipeline.other_entry_handler import (
     extract_not_null_df,
     process_other_entry_replacements,
 )
-from pipeline.patch.patchfile import PatchFile
+from panda_patches.patchfile import PatchFile
 
 
 def do_standard_comparision(data_in_path, human_suggestions_path, ref_patch_file_path):

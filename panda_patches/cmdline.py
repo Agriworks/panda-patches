@@ -4,7 +4,7 @@ import traceback
 import click
 import pandas as pd
 
-from panda_patch.patchfile import PatchFile, generate_update_patches
+from panda_patches.patchfile import PatchFile, generate_update_patches
 
 
 @click.command()

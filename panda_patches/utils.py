@@ -1,6 +1,6 @@
 from pathlib import Path
 import traceback
-from panda_patch.patchfile import PatchFile, generate_update_patches
+from panda_patches.patchfile import PatchFile, generate_update_patches
 import pandas as pd
 
 

@@ -2,7 +2,7 @@ import json
 from typing import Any
 from deepdiff import DeepDiff
 from tests.conftest import sample_patch_json, sample_data_frame
-from pipeline.patch.patchfile import Patch, PatchFile, UpdatePatch, generate_patches
+from panda_patches.patchfile import Patch, PatchFile, UpdatePatch, generate_patches
 
 json_dict = {}
 with open("patchfile_example.json", "r") as file_ptr:
@@ -85,7 +85,7 @@ import json
 
 import pandas as pd
 
-from pipeline.patch.patchfile import Patch, PatchFile, generate_patches
+from panda_patches.patchfile import Patch, PatchFile, generate_patches
 
 
 # json_dict = {}

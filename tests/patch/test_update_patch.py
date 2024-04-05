@@ -1,4 +1,4 @@
-from pipeline.patch.update_patch import UpdatePatch
+from panda_patches.update_patch import UpdatePatch
 
 
 def test_update_patch_eq():

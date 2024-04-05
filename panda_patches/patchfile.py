@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 import pandas as pd
 
-from panda_patch.update_patch import UpdatePatch
+from panda_patches.update_patch import UpdatePatch
 
 
 @dataclass

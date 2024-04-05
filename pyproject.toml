@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "panda-patch"
+name = "panda-patches"
 version = "0.1.0"
 description = "See changes made to datasets in terms of patches"
 authors = ["Radhakrishna Sanka <rkrishnasanka@gmail.com>"]
@@ -11,14 +11,28 @@ packages = [{include = "panda_patches"}]
 python = "^3.11"
 pandas = "^2.1.3"
 click = "^8.1.7"
+deepdiff = "^6.7.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.11.0"
 mypy = "^1.7.1"
+pytest = "^8.1.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-generate-patch = "panda_patch.cmdline:generate_patch_from_csv"
+generate-patch = "panda_patches.cmdline:generate_patch_from_csv"
+
+[tool.poetry.extras]
+docs = ["sphinx"]
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = [
+    "./tests/"
+]
